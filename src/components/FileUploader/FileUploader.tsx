@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Papa from "papaparse";
 import type { ExperimentData } from "../../types/experiment";
 import styles from "./FileUploader.module.css";
-import { Loader } from "../Loader.tsx";
+import { Loader } from "../Loader";
 
 interface FileUploaderProps {
   setExperimentData: React.Dispatch<
@@ -14,6 +14,14 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
   setExperimentData,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const requiredHeaders = [
+    "experiment_id",
+    "metric_name",
+    "step",
+    "value",
+  ];
+
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -32,6 +40,22 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
       skipEmptyLines: true,
       worker: true,
       complete: (result) => {
+        const headers = result.meta.fields;
+
+        const hasAllHeaders = requiredHeaders.every((h) =>
+          headers?.includes(h)
+        );
+
+        if (!hasAllHeaders) {
+          alert(
+            `CSV file is missing required columns: ${requiredHeaders.join(
+              ", "
+            )}`
+          );
+          setIsLoading(false);
+          return;
+        }
+
         const validData = (result.data as ExperimentData[])
           .filter(
             (d) =>
