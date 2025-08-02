@@ -32,7 +32,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
       skipEmptyLines: true,
       worker: true,
       complete: (result) => {
-        const validData = (result.data as any[])
+        const validData = (result.data as ExperimentData[])
           .filter(
             (d) =>
               d.experiment_id &&
