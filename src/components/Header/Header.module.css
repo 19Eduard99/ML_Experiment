@@ -1,0 +1,30 @@
+.header {
+  padding: 1.5rem 0;
+  border-bottom: 3px solid #1e40af;
+  text-align: center;
+  background-color: #1e3a8a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f0f9ff;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 1.2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: inline-block;
+}
+.title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: #64ffda;
+  border-radius: 3px;
+}
